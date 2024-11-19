@@ -9,14 +9,14 @@ Screenshot:
 ![Alt text](imgs/demo.png)
 sqlcoder-7b is multilingual. The above query is in Spanish and asks "How many patients weigh more than 60 kilograms and have a heart rate greater than 72 beats per minute?"
 
-To run it, you need to:
+To run it, please:
 1. `pip install -r sql_generator_backend/requirements.txt` 
 2. Run the backend which initializes sqlcoder-7b using the command `flask --app app run --debug --host=0.0.0.0 --port=5001`
 3. Inside `lib/main.dart`, you can select a virtual device and run the app, and make natural language queries. Feel free to modify the database schema in `sql_generator_backend/app.py` according to your needs. 
 
 # Future updates
-- Currently, inference takes very long (~3 mins), so we need to optimize throughput. If possible, the text-to-SQL backend model should be BERT-based so it can compile to Tensorflow Lite.
-- We also plan to be able actually execute the SQL command on an external database
+- Currently, inference takes very long (~3 mins), so we need to optimize throughput. (If possible, the text-to-SQL backend model should be BERT-based so it can compile to Tensorflow Lite).
+- We also plan to be able to parse and execute the SQL command on an external database
 
 ## Tutorial on getting started with Flutter
 
