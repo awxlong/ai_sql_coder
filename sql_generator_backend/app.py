@@ -1,10 +1,10 @@
 from flask import Flask, request, jsonify
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 import torch
-# from flask_cors import CORS
+from flask_cors import CORS
 
 app = Flask(__name__)
-# CORS(app)  # Enable CORS for all routes
+CORS(app)  # Enable CORS for all routes
 
 # Load model and tokenizer
 tokenizer = AutoTokenizer.from_pretrained("defog/sqlcoder-7b-2")
@@ -19,7 +19,7 @@ pipe = pipeline(
         "text-generation",
         model=model,
         tokenizer=tokenizer,
-        max_new_tokens=36,
+        max_new_tokens=42,
         do_sample=False,
         return_full_text=False, # added return_full_text parameter to prevent splitting issues with prompt
         num_beams=1,            # greedy search

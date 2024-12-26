@@ -13,7 +13,7 @@ class _QueryGeneratorScreenState extends State<QueryGeneratorScreen> {
   String _generatedQuery = '';
 
   void _generateQuery() async {
-    ApiService apiService = ApiService('http://10.0.2.2:5001/'); // Replace with your backend URL, e.g http://10.0.2.2:5001/ for virtual android simulator and http://192.168.0.8:5001 for my actual huawei
+    ApiService apiService = ApiService('http://localhost:5001'); // Replace with your backend URL, e.g 'http://localhost:5001' for Chrome web, http://10.0.2.2:5001/ for virtual android simulator and http://192.168.0.8:5001 for my actual huawei
     try {
       final response = await apiService.generateQuery(_controller.text);
       setState(() {
