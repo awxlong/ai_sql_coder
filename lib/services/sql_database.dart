@@ -92,11 +92,12 @@ Future<void> populateDatabase() async {
 
 Future<List<Map<String, dynamic>>> executeQuery(String query) async {
   final db = await DatabaseHelper.instance.database;
+  print("Base de datos inicializada");
   try {
     final result = await db.rawQuery(query);
     return result;
   } catch (e) {
-    print('Error executing query: $e');
+    print('Error ejecutando la consulta: $e');
     return [];
   }
 }

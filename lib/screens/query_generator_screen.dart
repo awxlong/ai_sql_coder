@@ -13,7 +13,8 @@ class _QueryGeneratorScreenState extends State<QueryGeneratorScreen> {
   final TextEditingController _controller = TextEditingController();
   String _generatedQuery = '';
   List<Map<String, dynamic>> _queryResult = []; // For storing query from LLM
-
+  // late Future<List<Map<String, dynamic>>> _queryResult;
+  
   void _generateQuery() async {
     ApiService apiService = ApiService('http://192.168.0.2:5001'); // Replace with your backend URL, e.g 'http://localhost:5001' for Chrome web, http://10.0.2.2:5001/ for virtual android simulator and http://192.168.0.8:5001 for my actual huawei
     try {
@@ -23,9 +24,10 @@ class _QueryGeneratorScreenState extends State<QueryGeneratorScreen> {
         _generatedQuery = response.query;
       });
       // Initialize a database and execute query from LLM on SQLite database
-      final result = await executeQuery(_generatedQuery);
+      //final result = await executeQuery(_generatedQuery);
+      List<Map<String, dynamic>> results = await executeQuery(_generatedQuery);
       setState(() {
-        _queryResult = result;
+        _queryResult = results;// Future.value(result); // result as Future<List<Map<String, dynamic>>>;
       });
     } catch (e) {
       print(e);
@@ -54,10 +56,11 @@ class _QueryGeneratorScreenState extends State<QueryGeneratorScreen> {
             const SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
-                itemCount: _queryResult.length ,
+                itemCount: _queryResult.length,
                 itemBuilder: (context, index) {
+                  final row = _queryResult[index];
                   return ListTile(
-                    title: Text(_queryResult[index].toString()),
+                    title: Text('Respuesta: ${row.toString()}'), // Display each row as a string
                   );
                 },
               ),
@@ -67,4 +70,6 @@ class _QueryGeneratorScreenState extends State<QueryGeneratorScreen> {
       ),
     );
   }
+
+
 }
