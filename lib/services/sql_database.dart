@@ -1,9 +1,10 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class DatabaseHelper {
+  // Initialize fields for connecting database
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
   static Database? _database;
 
@@ -14,18 +15,19 @@ class DatabaseHelper {
     _database = await _initDatabase();
     return _database!;
   }
-
+  // Initialize databse: connect to existing database or create new one
   Future<Database> _initDatabase() async {
     final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'dummy_database.db');
+    final path = join(dbPath, 'app_database.db');
     return await openDatabase(
       path,
       version: 1,
       onCreate: _onCreate,
     );
   }
-
+  // Create tables if they don't exist
   Future<void> _onCreate(Database db, int version) async {
+    print("Creating tables");
     await db.execute('''
       CREATE TABLE IF NOT EXISTS Pacientes (
         id_paciente INTEGER PRIMARY KEY,
@@ -38,7 +40,7 @@ class DatabaseHelper {
       )
     ''');
     await db.execute('''
-      CREATE TABLE IF NOT EXISTS Factores_Fisiologicos (
+      CREATE TABLE IF NOT EXISTS Factores_Fisiológicos (
         id_factor INTEGER PRIMARY KEY,
         id_paciente INTEGER,
         altura REAL,
@@ -55,30 +57,47 @@ class DatabaseHelper {
 Future<void> populateDatabase() async {
   final db = await DatabaseHelper.instance.database;
 
-  // Insert data into Pacientes
-  for (int i = 1; i <= 10; i++) {
-    await db.insert('Pacientes', {
-      'id_paciente': i,
-      'nombre': 'Nombre$i',
-      'apellido': 'Apellido$i',
-      'fecha_nacimiento': '198${i}-01-01',
-      'genero': i % 2 == 0 ? 'M' : 'F',
-      'telefono': '555-${i.toString().padLeft(4, '0')}',
-      'correo_electronico': 'email$i@example.com',
-    });
-  }
+  // Check if the Pacientes table is empty
+  final count = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM Pacientes'));
+  if (count == 0) {
+    // Table is empty, proceed with data insertion
+    for (int i = 1; i <= 10; i++) {
+      await db.insert('Pacientes', {
+        'id_paciente': i,
+        'nombre': 'Nombre$i',
+        'apellido': 'Apellido$i',
+        'fecha_nacimiento': '198$i-01-01',
+        'genero': i % 2 == 0 ? 'M' : 'F',
+        'telefono': '555-${i.toString().padLeft(4, '0')}',
+        'correo_electronico': 'email$i@example.com',
+      });
+    }
 
-  // Insert data into Factores_Fisiologicos
-  for (int i = 1; i <= 20; i++) {
-    await db.insert('Factores_Fisiologicos', {
-      'id_factor': i,
-      'id_paciente': (i % 10) + 1,
-      'altura': (1.5 + (i % 5) * 0.1).toStringAsFixed(2),
-      'peso': (50 + (i % 5) * 10).toStringAsFixed(2),
-      'presion_arterial': '${100 + (i % 5) * 10}/70',
-      'frecuencia_cardiaca': 60 + (i % 5) * 10,
-      'fecha_registro': '2024-${(i % 12) + 1}-01',
-    });
+    // Insert data into Factores_Fisiológicos
+    for (int i = 1; i <= 20; i++) {
+      await db.insert('Factores_Fisiológicos', {
+        'id_factor': i,
+        'id_paciente': (i % 10) + 1,
+        'altura': (1.5 + (i % 5) * 0.1).toStringAsFixed(2),
+        'peso': (50 + (i % 5) * 10).toStringAsFixed(2),
+        'presion_arterial': '${100 + (i % 5) * 10}/70',
+        'frecuencia_cardiaca': 60 + (i % 5) * 10,
+        'fecha_registro': '2024-${(i % 12) + 1}-01',
+      });
+    }
+  } else {
+    print('La tabla ya está poblada, por ende saltamos la inserción de nuevos datos.');
+  }
+}
+
+Future<List<Map<String, dynamic>>> executeQuery(String query) async {
+  final db = await DatabaseHelper.instance.database;
+  try {
+    final result = await db.rawQuery(query);
+    return result;
+  } catch (e) {
+    print('Error executing query: $e');
+    return [];
   }
 }
 

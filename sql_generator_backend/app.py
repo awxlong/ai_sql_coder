@@ -19,7 +19,7 @@ pipe = pipeline(
         "text-generation",
         model=model,
         tokenizer=tokenizer,
-        max_new_tokens=42,
+        max_new_tokens=64,
         do_sample=False,
         return_full_text=False, # added return_full_text parameter to prevent splitting issues with prompt
         num_beams=1,            # greedy search

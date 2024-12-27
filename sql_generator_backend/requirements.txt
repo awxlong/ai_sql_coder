@@ -1,3 +1,4 @@
 flask
 transformers
 torch
+flask_cors

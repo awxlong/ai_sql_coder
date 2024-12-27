@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sql_ai_app/services/sql_database.dart'; // Import Helper functions for SQL manipulation
 import '../services/api_service.dart'; // Import the API service
 
 class QueryGeneratorScreen extends StatefulWidget {
@@ -11,13 +12,20 @@ class QueryGeneratorScreen extends StatefulWidget {
 class _QueryGeneratorScreenState extends State<QueryGeneratorScreen> {
   final TextEditingController _controller = TextEditingController();
   String _generatedQuery = '';
+  List<Map<String, dynamic>> _queryResult = []; // For storing query from LLM
 
   void _generateQuery() async {
-    ApiService apiService = ApiService('http://localhost:5001'); // Replace with your backend URL, e.g 'http://localhost:5001' for Chrome web, http://10.0.2.2:5001/ for virtual android simulator and http://192.168.0.8:5001 for my actual huawei
+    ApiService apiService = ApiService('http://192.168.0.2:5001'); // Replace with your backend URL, e.g 'http://localhost:5001' for Chrome web, http://10.0.2.2:5001/ for virtual android simulator and http://192.168.0.8:5001 for my actual huawei
     try {
+      // Obtain response from LLM
       final response = await apiService.generateQuery(_controller.text);
       setState(() {
         _generatedQuery = response.query;
+      });
+      // Initialize a database and execute query from LLM on SQLite database
+      final result = await executeQuery(_generatedQuery);
+      setState(() {
+        _queryResult = result;
       });
     } catch (e) {
       print(e);
@@ -43,6 +51,17 @@ class _QueryGeneratorScreenState extends State<QueryGeneratorScreen> {
             ),
             const SizedBox(height: 20),
             Text('Consulta generada: $_generatedQuery'),
+            const SizedBox(height: 20),
+            Expanded(
+              child: ListView.builder(
+                itemCount: _queryResult.length ,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(_queryResult[index].toString()),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
