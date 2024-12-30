@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sql_ai_app/services/sql_database.dart'; // Import Helper functions for SQL manipulation
+import 'package:sql_ai_app/services/sql_database_existing.dart'; // Import Helper functions for SQL manipulation
 import '../services/api_service.dart'; // Import the API service
 
 class QueryGeneratorScreen extends StatefulWidget {
@@ -13,7 +13,7 @@ class _QueryGeneratorScreenState extends State<QueryGeneratorScreen> {
   final TextEditingController _controller = TextEditingController();
   String _generatedQuery = '';
   List<Map<String, dynamic>> _queryResult = []; // For storing query from LLM
-  // late Future<List<Map<String, dynamic>>> _queryResult;
+  
   
   void _generateQuery() async {
     ApiService apiService = ApiService('http://192.168.0.2:5001'); // Replace with your backend URL, e.g 'http://localhost:5001' for Chrome web, http://10.0.2.2:5001/ for virtual android simulator and http://192.168.0.8:5001 for my actual huawei
@@ -23,9 +23,11 @@ class _QueryGeneratorScreenState extends State<QueryGeneratorScreen> {
       setState(() {
         _generatedQuery = response.query;
       });
-      // Initialize a database and execute query from LLM on SQLite database
-      //final result = await executeQuery(_generatedQuery);
-      List<Map<String, dynamic>> results = await executeQuery(_generatedQuery);
+      // Execute the query on the SQLite database
+      SQLDatabaseExisting sqlDatabase = SQLDatabaseExisting();
+      
+      List<Map<String, dynamic>> results = await sqlDatabase.executeQueryExisting(_generatedQuery);
+
       setState(() {
         _queryResult = results;// Future.value(result); // result as Future<List<Map<String, dynamic>>>;
       });

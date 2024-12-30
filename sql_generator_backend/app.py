@@ -29,34 +29,33 @@ def generate_query():
     user_query = request.json.get('prompt') # ejemplo "cuántos pacientes pesan más de 60 kilogramos y tienen una frecuencia cardíaca mayor a 72 latidos por minuto?"
 
     prompt = f"""
-    Tarea
-    Generar una consulta SQL para responder [QUESTION]{user_query}[/QUESTION]
-    Esquema de Base de Datos
-    La consulta se ejecutará en una base de datos con el siguiente esquema:
+    ### Task
+    Generate a SQL query to answer [QUESTION]{user_query}[/QUESTION]
 
-    CREATE TABLE Pacientes (
-        id_paciente INT PRIMARY KEY,
-        nombre VARCHAR(50),
-        apellido VARCHAR(50),
-        fecha_nacimiento DATE,
-        genero CHAR(1),  -- 'M' para Masculino, 'F' para Femenino
-        telefono VARCHAR(15),
-        correo_electronico VARCHAR(100)
+    ### Database Schema
+    The query will run on a database with the following schema:
+    CREATE TABLE mimic_iv_demo (
+        subject_id INTEGER,
+        hadm_id INTEGER,
+        admittime DATETIME,
+        dischtime DATETIME,
+        deathtime DATETIME,
+        admission_type TEXT,
+        admit_provider_id TEXT,
+        admission_location TEXT,
+        discharge_location TEXT,
+        insurance TEXT,
+        language TEXT,
+        marital_status TEXT,
+        race TEXT,
+        edregtime DATETIME,
+        edouttime DATETIME,
+        hospital_expire_flag INTEGER
     );
 
-    CREATE TABLE Factores_Fisiológicos (
-        id_factor INT PRIMARY KEY,
-        id_paciente INT,
-        altura DECIMAL(5,2),  -- Altura en metros
-        peso DECIMAL(5,2),    -- Peso en kilogramos
-        presion_arterial VARCHAR(10),  -- Ejemplo: '120/80'
-        frecuencia_cardiaca INT,  -- Frecuencia cardíaca en latidos por minuto
-        fecha_registro DATE,
-        FOREIGN KEY (id_paciente) REFERENCES Pacientes(id_paciente)
-    );
-
-    Respuesta
-    Dado el esquema de la base de datos, aquí está la consulta SQL que [QUESTION]{user_query}[/QUESTION]:
+    ### Answer
+    Given the database schema, here is the SQL query that [QUESTION]{user_query}[/QUESTION]:
+    [SQL]
     """
 
     generated_query = (

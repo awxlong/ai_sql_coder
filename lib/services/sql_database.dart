@@ -18,7 +18,7 @@ class DatabaseHelper {
   // Initialize databse: connect to existing database or create new one
   Future<Database> _initDatabase() async {
     final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'app_database.db');
+    final path = join(dbPath, 'mimic_iv_demo_admissions.db');
     return await openDatabase(
       path,
       version: 1,
