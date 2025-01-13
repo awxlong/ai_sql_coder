@@ -16,7 +16,7 @@ class _QueryGeneratorScreenState extends State<QueryGeneratorScreen> {
   
   
   void _generateQuery() async {
-    ApiService apiService = ApiService('http://192.168.0.2:5001'); // Replace with your backend URL, e.g 'http://localhost:5001' for Chrome web, http://10.0.2.2:5001/ for virtual android simulator and http://192.168.0.8:5001 for my actual huawei
+    ApiService apiService = ApiService('http://192.168.0.2:5001'); // Replace with your backend URL, e.g 'http://localhost:5001' for Chrome web, http://10.0.2.2:5001/ for virtual android simulator and http://192.168.0.8:5001 or http://192.168.0.2:5001 for my actual huawei
     try {
       // Obtain response from LLM
       final response = await apiService.generateQuery(_controller.text);
@@ -25,7 +25,7 @@ class _QueryGeneratorScreenState extends State<QueryGeneratorScreen> {
       });
       // Execute the query on the SQLite database
       SQLDatabaseExisting sqlDatabase = SQLDatabaseExisting();
-      
+      // sqlDatabase.debugTableNames(); // for debugging what tables are there in the .db created
       List<Map<String, dynamic>> results = await sqlDatabase.executeQueryExisting(_generatedQuery);
 
       setState(() {

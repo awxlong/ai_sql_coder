@@ -11,7 +11,7 @@ tokenizer = AutoTokenizer.from_pretrained("defog/sqlcoder-7b-2")
 model = AutoModelForCausalLM.from_pretrained("defog/sqlcoder-7b-2",
                                              trust_remote_code=True,
                                              torch_dtype=torch.float16,
-                                             device_map="auto",
+                                             device_map="cpu", # cpu because the user input would be on the cpu by default
                                              use_cache=True,
                                             )
 eos_token_id = tokenizer.eos_token_id
@@ -30,7 +30,7 @@ def generate_query():
 
     prompt = f"""
     ### Task
-    Generate a SQL query to answer [QUESTION]{user_query}[/QUESTION]
+    Generate a SQL query compatible with SQLite to answer [QUESTION]{user_query}[/QUESTION]
 
     ### Database Schema
     The query will run on a database with the following schema:
@@ -54,7 +54,7 @@ def generate_query():
     );
 
     ### Answer
-    Given the database schema, here is the SQL query that [QUESTION]{user_query}[/QUESTION]:
+    Given the database schema, here is the SQL query compatible with SQLite that answers [QUESTION]{user_query}[/QUESTION]:
     [SQL]
     """
 
