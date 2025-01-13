@@ -30,7 +30,7 @@ def generate_query():
 
     prompt = f"""
     ### Task
-    Generate a SQL query compatible with SQLite to answer [QUESTION]{user_query}[/QUESTION]
+    Generate a SQL query to answer [QUESTION]{user_query}[/QUESTION]
 
     ### Database Schema
     The query will run on a database with the following schema:
@@ -54,7 +54,7 @@ def generate_query():
     );
 
     ### Answer
-    Given the database schema, here is the SQL query compatible with SQLite that answers [QUESTION]{user_query}[/QUESTION]:
+    Given the database schema, here is the SQL query that answers [QUESTION]{user_query}[/QUESTION]:
     [SQL]
     """
 
