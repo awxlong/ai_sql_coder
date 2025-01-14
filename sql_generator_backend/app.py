@@ -53,6 +53,8 @@ def generate_query():
         hospital_expire_flag INTEGER
     );
 
+    Be sure to use ilike for TEXT columns
+    
     ### Answer
     Given the database schema, here is the SQL query that answers [QUESTION]{user_query}[/QUESTION]:
     [SQL]
