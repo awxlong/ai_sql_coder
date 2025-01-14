@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="sql_ai_app"
+        android:label="InQuery"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
