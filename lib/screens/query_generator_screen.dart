@@ -64,7 +64,6 @@ class _QueryGeneratorScreenState extends State<QueryGeneratorScreen> {
     }
   } catch (e) {
     // Handle other errors (e.g., API errors)
-    print(e);
     setState(() {
       _queryResult = [{'error': 'An error occurred: ${e.toString()}', 'answer': 'Not Applicable'}];
     });

@@ -32,13 +32,10 @@ class SQLDatabaseExisting {
         // Write the bytes to the file
         await File(path).writeAsBytes(bytes, flush: true);
         
-        print('Database copied from assets to $path');
       } catch (e) {
-        print('Error copying database: $e');
         rethrow;
       }
     } else {
-      print('Opening existing database at $path');
     }
 
     return await openDatabase(
@@ -52,10 +49,9 @@ class SQLDatabaseExisting {
     return await db.rawQuery(query);
   }
 
-  Future<void> debugTableNames() async {
-    final db = await database;
-    final result = await db.rawQuery("SELECT name FROM sqlite_master WHERE type='table';");
+//   Future<void> debugTableNames() async {
+//     final db = await database;
+//     final result = await db.rawQuery("SELECT name FROM sqlite_master WHERE type='table';");
 
-    print(result);
-}
+// }
 }

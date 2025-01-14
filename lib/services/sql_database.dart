@@ -27,7 +27,6 @@ class DatabaseHelper {
   }
   // Create tables if they don't exist
   Future<void> _onCreate(Database db, int version) async {
-    print("Creating tables");
     await db.execute('''
       CREATE TABLE IF NOT EXISTS Pacientes (
         id_paciente INTEGER PRIMARY KEY,
@@ -86,18 +85,15 @@ Future<void> populateDatabase() async {
       });
     }
   } else {
-    print('La tabla ya está poblada, por ende saltamos la inserción de nuevos datos.');
   }
 }
 
 Future<List<Map<String, dynamic>>> executeQuery(String query) async {
   final db = await DatabaseHelper.instance.database;
-  print("Base de datos inicializada");
   try {
     final result = await db.rawQuery(query);
     return result;
   } catch (e) {
-    print('Error ejecutando la consulta: $e');
     return [];
   }
 }
