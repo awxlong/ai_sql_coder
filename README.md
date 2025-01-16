@@ -1,4 +1,6 @@
-<img src="assets/inquery_logo.png" alt="InQuery Logo" width="50" height="50" /> # InQuery: Text to SQL Generator
+<img src="assets/inquery_logo.png" alt="InQuery Logo" width="50" height="50" /> 
+
+# InQuery: Text to SQL Generator 
 
 Text-to-SQL in the medical domain is a task which converts natural language text to its corresponding SQL syntax. This is aimed at increasing accessibility for medical personnel who is not familiar with SQL syntax, but needs to query a structured database.
 
@@ -6,8 +8,7 @@ This is an app built written in Dart which queries a text-to-SQL model, [sqlcode
 
 ## Demo: 
 
-![Demo of InQuery app](imgs/inquery_demo.gif)
-
+<img src="imgs/inquery_demo.gif" alt="Demo of InQuery" width="50%" />
 
 To run it, please:
 1. `git clone https://github.com/awxlong/ai_sql_coder`
@@ -24,7 +25,7 @@ To run it, please:
 5. The query is executed on the demo database, and shows results. We handle errors such as mentioning columns which aren't in the schema by showing an answer "Not Applicable". 
 
 ## Future updates
-- Currently, inference takes very long (~3 mins), so we need to optimize throughput. I'm looking at [activation-aware quantization](https://arxiv.org/abs/2306.00978), which could hopefully give me both speed up, and a dramatic reduction in computational memory consumption. 
+- Currently, inference takes very long (~40 seconds), so we need to optimize throughput. I'm looking at [activation-aware quantization](https://arxiv.org/abs/2306.00978), which could hopefully give me both speed up, and a dramatic reduction in computational memory consumption. 
 - Recently, there's also work [on text to FHIR as part of MIMIC-IV](https://github.com/kind-lab/mimic-fhir), so it'd be interesting to train and deploy a model in that domain. 
 
 ## Tutorial on getting started with Flutter
