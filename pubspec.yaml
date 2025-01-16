@@ -48,6 +48,8 @@ flutter_icons:
   android: true
   ios: true
   image_path: "assets/inquery_logo.png" # Path to your custom icon
+  adaptive_icon_background: "#FFFFFF" # White background
+  adaptive_icon_foreground: "assets/inquery_logo.png" # Your logo
 
 dev_dependencies:
   flutter_test:

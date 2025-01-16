@@ -79,7 +79,7 @@ Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
       title: const Text(
-        'Text2SQL Query Generator',
+        'InQuery: Text to SQL Generator',
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 20,

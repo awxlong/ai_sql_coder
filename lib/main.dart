@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'AI SQL Query Generator',
+      title: 'InQuery',
       home: QueryGeneratorScreen(), // Set the home screen
     );
   }
