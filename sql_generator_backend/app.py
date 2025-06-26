@@ -75,4 +75,5 @@ def generate_query():
     return jsonify({'query': generated_query.strip()})
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5001) # flask --app app run --debug --host=0.0.0.0 --port=5001
+    port_num = 42
+    app.run(debug=True, host='0.0.0.0', port=port_num) # flask --app app run --debug --host=0.0.0.0 --port=port_num
